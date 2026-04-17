@@ -31,7 +31,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Inspect scopes Job 2 Step 1
-            run:
+            run: |
                 - echo "WORKFLOW VAR: $WORKFLOW_ENV"        # VISIBLE
                 - echo "JOB VAR: $JOB_ENV"                  # NOT VISIBLE
                 - echo "STEP VAR: $STEP_ENV"                # NOT VISIBLE
