@@ -4,17 +4,17 @@ on:
     workflow_dispatch:
 
 env:
-    WORKFLOW_VAR: "I am workflow scoped"
+    WORKFLOW_VAR: I_AM_WORKFLOW_SCOPED
 
 jobs:
     job-1:
         runs-on: ubuntu-latest
         env:
-            JOB_VAR: "I am job scoped"
+            JOB_VAR: I_AM_JOB_SCOPED
         steps:
           - name: Inspect scopes Job 1 Step 1
             env:
-                STEP_VAR: "I am step scoped"
+                STEP_VAR: I_AM_STEP_SCOPED
             run: |
                 - echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
                 - echo "JOB_VAR: $JOB_VAR"                  # VISIBLE
