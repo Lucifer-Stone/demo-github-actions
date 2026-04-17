@@ -16,16 +16,16 @@ jobs:
             env:
                 STEP_VAR: I_AM_STEP_SCOPED
             run: |
-                - echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
-                - echo "JOB_VAR: $JOB_VAR"                  # VISIBLE
-                - echo "STEP_VAR: $STEP_VAR                 # VISIBLE
+                echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
+                echo "JOB_VAR: $JOB_VAR"                  # VISIBLE
+                echo "STEP_VAR: $STEP_VAR                 # VISIBLE
 
 
           - name: Inspect scopes Job 1 Step 2
             run: |
-                - echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
-                - echo "JOB_VAR: $JOB_VAR"                  # VISIBLE
-                - echo "STEP_VAR: $STEP_VAR"                # NOT VISIBLE
+                echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
+                echo "JOB_VAR: $JOB_VAR"                  # VISIBLE
+                echo "STEP_VAR: $STEP_VAR"                # NOT VISIBLE
 
     job-2:
         runs-on: ubuntu-latest
