@@ -27,5 +27,5 @@ jobs:
       - name: Inspect scopes Job 2 Step 1
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR"        # VISIBLE
-          echo "JOB_VAR: $JOB_VAR"                  # NOT VISIBLE
+          echo "JOB_VAR: ${JOB_VAR:-<UNSET>}"       # NOT VISIBLE
           echo "STEP_VAR: ${STEP_VAR:-<UNSET>}"     # NOT VISIBLE
