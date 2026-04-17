@@ -16,9 +16,9 @@ jobs:
             env:
                 STEP_ENV: "I am step scoped"
             run: |
-                - echo "WORKFLOW VAR: $WORKFLOW_ENV"        # VISIBLE
-                - echo "JOB VAR: $JOB_ENV"                  # VISIBLE
-                - echo "STEP VAR: $STEP_ENV                 # VISIBLE
+                - echo "WORKFLOW_VAR: $WORKFLOW_ENV"        # VISIBLE
+                - echo "JOB_VAR: $JOB_ENV"                  # VISIBLE
+                - echo "STEP_VAR: $STEP_ENV                 # VISIBLE
 
 
           - name: Inspect scopes Job 1 Step 2
