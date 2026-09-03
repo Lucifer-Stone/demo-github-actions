@@ -19,4 +19,5 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/hello-world-javascript-action
-        who-to-greet: "Salman, The Earth says Hello from a third-party Open Source GitHub Action!"
+        with:
+          who-to-greet: "Salman, The Earth says Hello from a third-party Open Source GitHub Action!"
