@@ -3,6 +3,9 @@ name: Workflows, Jobs and Steps
 on:
   workflow_dispatch:
 
+env:
+  RELEASE_VERSION: v1.1
+
 jobs:
   job-1:
     runs-on: ubuntu-24.04
