@@ -3,7 +3,8 @@ name: Environment Variables
 on:
   workflow_dispatch:
 
-env:
+env:  
+  RELEASE_VERSION: v1.0
   WORKFLOW_VAR: I_AM_WORKFLOW_SCOPED
 
 jobs:
