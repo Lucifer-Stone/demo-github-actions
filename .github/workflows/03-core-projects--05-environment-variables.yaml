@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:  
-  RELEASE_VERSION: v1.0
+  RELEASE_VERSION: v1.1
   WORKFLOW_VAR: I_AM_WORKFLOW_SCOPED
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR"
           echo "JOB_VAR: $JOB_VAR" 
-          echo "STEP_VAR: $STEP_VAR"          # There is no Step Environment Variable set and won't be visible
+          echo "STEP_VAR: ${STEP_VAR:-<UNSET>}"          # There is no Step Environment Variable set and UNSET will be displayed
 
   job-2:
     runs-on: ubuntu-24.04
@@ -33,5 +33,5 @@ jobs:
       - name: Inspect scopes job 2 step 1
         run: |
           echo "WORKFLOW_VAR: $WORKFLOW_VAR"
-          echo "JOB_VAR: $JOB_VAR"            # There is no Job Environment Variable set and won't be visible
-          echo "STEP_VAR: $STEP_VAR"          # There is no Step Environment Variable set and won't be visible
+          echo "JOB_VAR: ${JOB_VAR:-<UNSET>}"            # There is no Job Environment Variable set and UNSET will be displayed
+          echo "STEP_VAR: ${STEP_VAR:-<UNSET>}"          # There is no Step Environment Variable set and UNSET will be displayed
