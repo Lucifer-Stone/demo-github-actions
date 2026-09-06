@@ -1,0 +1,36 @@
+name: Environment Variables
+
+on:
+  workflow_dispatch:
+
+env:
+  WORKFLOW_VAR: I_AM_WORKFLOW_SCOPED
+
+jobs:
+  job-1:
+    runs-on: ubuntu-24.04
+    env:
+      JOB_VAR: I_AM_JOB_1_SCOPED
+    steps:
+      - name: Inspect scopes job 1 step 1
+        env:
+          STEP_VAR: I_AM_STEP_SCOPED
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR"  # The Workflow Environment Variable is set and will be visible throughout the workflow
+          echo "JOB_VAR: $JOB_VAR"            # The Job Environment Variable is set and will be visible throughout Job-1
+          echo "STEP_VAR: $STEP_VAR"          # The Step Environment Variable is set and will be visible here only
+
+      - name: Inspect scopess job 1 step 2
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR"
+          echo "JOB_VAR: $JOB_VAR" 
+          echo "STEP_VAR: $STEP_VAR"          # There is no Step Environment Variable set and won't be visible
+
+  job-2:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Inspect scopes job 2 step 1
+        run: |
+          echo "WORKFLOW_VAR: $WORKFLOW_VAR"
+          echo "JOB_VAR: $JOB_VAR"            # There is no Job Environment Variable set and won't be visible
+          echo "STEP_VAR: $STEP_VAR"          # There is no Step Environment Variable set and won't be visible
