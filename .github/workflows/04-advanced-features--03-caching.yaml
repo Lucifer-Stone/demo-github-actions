@@ -1,0 +1,40 @@
+name: Caching
+
+on:
+  workflow_dispatch:
+
+jobs:
+  actions-cache:
+    name: GitHub Actions Demo Cache
+    runs-on: ubuntu-24.04
+    steps:
+      # Attempt to restore (misses on first run)
+      - name: Restore Cache
+        id: demo-cache
+        uses: actions/cache@v4
+        with:
+          path: demo-cache
+          key: demo-cache-v1
+
+      # Populate the cache if it's a cache miss
+      - name: Populate Cache
+        if: steps.demo-cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache not found. Populating cache..."
+          mkdir -p demo-cache
+          echo "This is a demo cache" > demo-cache/demo.txt
+          date > demo-cache/timestamp.txt
+      
+      # Save Cache if we populated it
+      - name: Save Cache
+        if: steps.demo-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: demo-cache
+          key: demo-cache-v1
+
+      - name: Verify Cache Status
+        run: |
+          echo "Cache hit? -> ${{ steps.demo-cache.outputs.cache-hit }}"
+          cat demo-cache/demo.txt
+          cat demo-cache/timestamp.txt
