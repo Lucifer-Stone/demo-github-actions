@@ -1,0 +1,38 @@
+name: Artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  artifact-producer:
+    name: Artifact Producer
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Create Artifact
+        run: |
+          echo "Hello from ${{ runner.os }}-${{ runner.arch }}" > artifact.txt
+          echo "Runner Name (type): ${{ runner.name }}" >> artifact.txt
+          echo "This is an artifact created by the Artifact Producer job." >> artifact.txt
+          echo "Generated on $(date)" >> artifact.txt
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: example-artifact
+          path: artifact.txt
+
+  artifact-consumer:
+    name: Artifact Consumer
+    runs-on: ubuntu-24.04
+    needs: artifact-producer
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: example-artifact
+          path: .
+
+      - name: Show Artifact Content
+        run: |
+          echo "Content of the downloaded artifact:"
+          cat artifact.txt
