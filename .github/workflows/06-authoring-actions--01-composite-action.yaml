@@ -17,13 +17,14 @@ jobs:
           who-to-greet: 'Mona the Octocat'
 
       - name: Display Random Number
+        id: run-composite-action
         run: echo "Random Number from Composite Action: ${{ steps.run-composite-action.outputs.random-number }}"
 
   hello-world-2:
     runs-on: ubuntu-24.04
     name: Second Usage of Composite Action
     steps:  
-    - name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Run Composite Action
@@ -32,4 +33,5 @@ jobs:
           who-to-greet: 'Gary the Octodog'
 
       - name: Display Random Number
+        id: run-composite-action
         run: echo "Random Number from Composite Action: ${{ steps.run-composite-action.outputs.random-number }}"
