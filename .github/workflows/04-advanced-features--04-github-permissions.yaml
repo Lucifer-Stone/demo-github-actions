@@ -26,12 +26,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Attempt to close a PR (should fail)
-        run: |
-          echo "Attempting to close a PR (this should fail)..."
-          gh pr close 1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      # - name: Attempt to close a PR (should fail)
+      #   run: |
+      #     echo "Attempting to close a PR (this should fail)..."
+      #     gh pr close 1
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
 
       - name: Attempt to add a label to a PR (should fail)
         run: |
@@ -65,12 +65,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Close a PR (should succeed)
-        run: |
-          echo "Closing a PR (this should succeed)..."
-          gh pr close 1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      # - name: Close a PR (should succeed)
+      #   run: |
+      #     echo "Closing a PR (this should succeed)..."
+      #     gh pr close 1
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
 
       - name: Add a label to a PR (should succeed)
         run: |
