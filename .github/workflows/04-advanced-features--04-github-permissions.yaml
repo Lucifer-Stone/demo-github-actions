@@ -1,0 +1,85 @@
+name: Permissions
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  read-only-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: read                       # Can read pull requests, but cannot write to them
+    continue-on-error: true                     # Avoids failing entire workflow if this job fails
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh -y
+
+      - name: List the first 5 open PRs
+        run: |
+          echo "Listing the first 5 open PRs..."
+          gh pr list --limit 5
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Attempt to close a PR (should fail)
+        run: |
+          echo "Attempting to close a PR (this should fail)..."
+          gh pr close 1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Attempt to add a label to a PR (should fail)
+        run: |
+          echo "Attempting to add a label to a PR (this should fail)..."
+          gh pr edit 1 --add-label "demo-label"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Confirm the failure
+        if: failure()
+        run: |
+          echo "As expected, the previous steps failed due to insufficient permissions."
+
+  read-write-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write                      # Can read and write to pull requests
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh -y
+
+      - name: List the first 5 open PRs
+        run: |
+          echo "Listing the first 5 open PRs..."
+          gh pr list --limit 5
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Close a PR (should succeed)
+        run: |
+          echo "Closing a PR (this should succeed)..."
+          gh pr close 1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Add a label to a PR (should succeed)
+        run: |
+          echo "Adding a label to a PR (this should succeed)..."
+          gh pr edit 1 --add-label "demo-label"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Confirm the success
+        if: success()
+        run: |
+          echo "The previous steps succeeded, demonstrating that write permissions are effective."
