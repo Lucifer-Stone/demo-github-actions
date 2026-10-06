@@ -59,27 +59,38 @@ jobs:
           sudo apt-get install gh -y
 
       - name: List the first 5 open PRs
+        id: list-prs
         run: |
           echo "Listing the first 5 open PRs..."
           gh pr list --limit 5
+          
+          PR_COUNT=$(gh pr list --state open --json number --jq 'length')
+          PR_NUMBER=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
+
+          echo "pr_count=$PR_COUNT" >> "$GITHUB_OUTPUT"
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      # - name: Close a PR (should succeed)
-      #   run: |
-      #     echo "Closing a PR (this should succeed)..."
-      #     gh pr close 1
-      #   env:
-      #     GITHUB_TOKEN: ${{ github.token }}
+      - name: Close a PR (should succeed)
+        if: steps.list-prs.outputs.pr_count != '0'
+        run: |
+          echo "Closing PR #$PR_NUMBER (this should succeed)..."
+          gh pr close "$PR_NUMBER"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.list-prs.outputs.pr_number }}
 
       - name: Add a label to a PR (should succeed)
+        if: steps.list-prs.outputs.pr_count != '0'
         run: |
           echo "Adding a label to a PR (this should succeed)..."
-          gh pr edit 1 --add-label "demo-label"
+          gh pr edit "$PR_NUMBER" --add-label "demo-label"
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.list-prs.outputs.pr_number }}
 
       - name: Confirm the success
-        if: success()
+        if: success() && steps.list-prs.outputs.pr_count != '0'
         run: |
           echo "The previous steps succeeded, demonstrating that write permissions are effective."
