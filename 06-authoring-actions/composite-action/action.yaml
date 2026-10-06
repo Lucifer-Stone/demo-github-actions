@@ -1,0 +1,28 @@
+name: 'Hello World & Random Number'
+
+description: 'A simple composite action that prints Hello World and generates a random number'
+
+inputs:
+  who-to-greet:                       # ID of Input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+
+outputs:
+  random-number:
+    description: 'Random Number'
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Print a greeting
+      run: echo "Hello $INPUT_WHO_TO_GREET!"
+      shell: bash
+      env:
+        INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+
+    - name: Random Number Generator
+      id: random-number-generator
+      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
