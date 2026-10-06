@@ -31,7 +31,7 @@ jobs:
 
       # Step 2 - Run for every combination except number 1 and letter c
       - name: Run everywhere except number 1 and letter c
-        if: !(matrix.number == 1 && matrix.letter == 'c')
+        if: ${{ !(matrix.number == 1 && matrix.letter == 'c') }}
         run: echo "This step runs for ${{ matrix.number }}-${{ matrix.letter }}"
 
   sleep-job:
