@@ -17,10 +17,6 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
 
-      - name: Debug
-        run: echo "generated = ${{ steps.random-number-generator.outputs.random-number }}"
-        shell: bash
-
       - name: Display Random Number
         run: |
           echo "Random Number from Composite Action: $RANDOM_NUMBER"
@@ -39,10 +35,6 @@ jobs:
         uses: ./06-authoring-actions/composite-action
         with:
           who-to-greet: 'Gary the Octodog'
-
-      - name: Debug
-        run: echo "generated = ${{ steps.random-number-generator.outputs.random-number }}"
-        shell: bash
 
       - name: Display Random Number
         run: |
