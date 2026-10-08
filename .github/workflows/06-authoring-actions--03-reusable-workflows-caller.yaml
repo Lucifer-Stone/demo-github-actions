@@ -1,0 +1,22 @@
+name: Reusable Workflows Caller
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-reusable-workflow-path:
+    name: Invoke Reusable Workflow with Relative Path
+    uses: ./.github/workflows/06-authoring-actions--02-reusable-workflows-source.yaml
+    with:
+      foo: bar
+      environment: stage
+    secrets: inherit
+
+  call-reusable-workflow-sha:
+    name: Invoke Reusable Workflow with Repo + Commit Hash
+    uses: ./.github/workflows/06-authoring-actions--02-reusable-workflows-source.yaml
+    with:
+      foo: bar
+      environment: production
+    secrets: 
+      EXAMPLE_REPOSITORY_SECRET: ${{ secrets.EXAMPLE_REPOSITORY_SECRET }}
